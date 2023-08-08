@@ -1,0 +1,7 @@
+{
+  "name": "paranoiaApp2023",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
