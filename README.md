@@ -2,7 +2,7 @@
 
 <p align="center">
 Hybrid mobile app built with <strong>Ionic + Angular</strong> and powered by <strong>Capacitor</strong>.  
-It communicates with the <a href="https://github.com/MunizErthal/paranoia-api">Paranoia REST API</a> and serves as a tool to games execution. 
+<br>It communicates with the <a href="https://github.com/MunizErthal/paranoia-api">Paranoia REST API</a> and serves as a tool to games execution. 
 </p>
 
 ---
@@ -13,6 +13,8 @@ It communicates with the <a href="https://github.com/MunizErthal/paranoia-api">P
 
 This mobile application is part of the **Paranoia ecosystem**, providing an interface for players to interact with game data, like puzzle tips and Ranking It is compiled for Android using Capacitor and leverages native features like camera to read QR Codes, vibration, status bar, and audio playback.
 
+
+> 🗓️ **Project developed in 2024**
 ---
 
 ## 🛠️ Tech Stack
