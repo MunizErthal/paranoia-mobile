@@ -19,7 +19,7 @@ This mobile application is part of the **Paranoia ecosystem**, providing an inte
 
 - **Ionic Framework** (v7)  
 - **Angular** (v16)
-- - **CSS** – Custom styling
+- - **SCSS** – Custom styling
 - **Capacitor** (v5) for native runtime  
 - **Paranoia API** integration via REST  
 - Native plugins: Splash Screen, Status Bar, Vibration, Audio, Video Player, Barcode Scanner, and more
@@ -42,6 +42,7 @@ This mobile application is part of the **Paranoia ecosystem**, providing an inte
 - 📷 Start new game sessions via QR Code
 - 🚩 Submit in-game hint requests
 - 🎖️ Team ranking based on best completion times
+- 🕹️ Gamification with medal-based rewards
 - 👥 Create and manage teams with registered players
 - 📚 Built-in game tutorials for new players
 
