@@ -1,20 +1,71 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false" style="color: red;"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+      <ion-grid>
+        <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+          <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+        </ion-row>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+        <ion-row ion-justify-content-center ion-align-items-center style="display: block; margin-top: 20vw; text-align: center;">
+          <swiper-container [slidesPerView]="1.2" [centeredSlides]="true" [spaceBetween]="10">
+            <swiper-slide *ngIf="partidasEmAndamento.length <= 0">
+              <img (click)="lerQRCode()" src="../../assets/images/produtos/aentregademakarov/logo.jpg" alt="" style="border: solid white; border-radius: 2%; width: 80vw; height: auto;">
+            </swiper-slide>
+            <swiper-slide *ngFor="let partida of partidasEmAndamento">
+              <img (click)="carregarPartida(partida.id)" src="../../assets/images/produtos/aentregademakarov/logo.jpg" alt="" style="border: solid white; border-radius: 2%; width: 80vw; height: auto;">
+              <div style="background-color: white; height: 30vw; border: solid 1vw; border-radius: 3%; margin-top: -3vw;">
+                <ion-row style="margin: auto; color: black;">
+                  <ion-col size="3" class="ion-align-items-center" style="margin: auto; margin-top: -2vw; margin-right: -7vw; margin-left: 0vw; font-size: 10vw; color: black; display: flex; flex-direction: column; font-size: 3.3vw;">
+                    <label style="font-family: Bellerose; font-family: Bellerose; text-align: center; width: 15vw;">Jogo</label>
+                    <label style="font-family: Bellerose; font-family: Bellerose; text-align: center; width: 15vw; margin-top: -4vw;">Em</label>
+                    <label style="font-family: Bellerose; font-family: Bellerose; text-align: center; width: 15vw; margin-top: -4.7vw;">Andamento</label>
+                  </ion-col>
+                  <ion-col size="2" style="height: 10vw; margin-top: 3vw; margin-right: -7vw; margin-left: 10vw;" class="ion-align-items-center">
+                    <ion-icon name="shield-outline" style="display: contents; font-size: 6vw; color: black;"></ion-icon>
+                  </ion-col>
+                  <ion-col size="7" class="ion-align-items-center equipe-nome-col"  style="font-size: 10vw; color: black; margin-top: -4vw; text-wrap: nowrap; max-width: 25vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    <ion-label style="font-size: 7vw; font-family: Bellerose; margin-left: 5vw;">{{partida.nomeEquipe}}</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row  style="margin: auto; color: black;">
+                  <ion-col class="ion-align-items-center">
+                    <ion-icon name="hourglass-outline" style="display: contents; font-size: 6vw; color: black;"></ion-icon>
+                  </ion-col>
+    
+                  <ion-col class="ion-align-items-center" style="margin: auto; color: black;">
+                    <ion-label>{{formatarData(partida.criadoEm)}}</ion-label>
+                  </ion-col>
+    
+                  <ion-col class="ion-align-items-center">
+                    <ion-icon name="help-buoy-outline" style="display: contents; font-size: 6vw; color: black;"></ion-icon>
+                  </ion-col>
+    
+                  <ion-col class="ion-align-items-center"  style="margin: auto; font-size: 10vw; color: black;">
+                    <ion-label>{{partida.numeroDeDicas}}</ion-label>
+                  </ion-col>
+    
+                  <ion-col class="ion-align-items-end">
+                    <ion-icon name="people-outline" style="display: contents; font-size: 6vw; color: black;"></ion-icon>
+                  </ion-col> 
+    
+                  <ion-col class="ion-align-items-end" style="margin: auto; font-size: 10vw; color: black;">
+                    <ion-label>{{partida.numeroDeJogadores}}</ion-label>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </swiper-slide>
+            <swiper-slide>
+              <img (click)="goTutorial()" src="../../assets/images/home/tutorial.jpg" alt="" style="border: solid white; border-radius: 2%; width: 80vw; height: auto;">
+            </swiper-slide>
+          </swiper-container>
+        </ion-row>
+      </ion-grid>
+  </ion-content>
+</div>

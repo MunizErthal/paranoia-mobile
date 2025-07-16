@@ -1,0 +1,54 @@
+.transp {
+    --background: none transparent !important;
+    background-color: transparent !important;
+    --ion-background-color: transparent;
+  }
+  
+  .bblak {
+    --background: black;
+  }
+  
+  /* QRCode transparency */
+  .transparentBody {
+    background: none transparent !important;
+    background-color: none !important;
+    --ion-background-color: transparent;
+  }
+  
+  .divReader {
+    width: 50vw;
+    height: 50vw;
+    background:
+      linear-gradient(to right, red 4px, transparent 4px) 0 0,
+      linear-gradient(to right, red 4px, transparent 4px) 0 100%,
+      linear-gradient(to left, red 4px, transparent 4px) 100% 0,
+      linear-gradient(to left, red 4px, transparent 4px) 100% 100%,
+      linear-gradient(to bottom, red 4px, transparent 4px) 0 0,
+      linear-gradient(to bottom, red 4px, transparent 4px) 100% 0,
+      linear-gradient(to top, red 4px, transparent 4px) 0 100%,
+      linear-gradient(to top, red 4px, transparent 4px) 100% 100%;
+  
+    margin: auto;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+  }
+  
+  .divReaderParent {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  ion-select::part(icon) {
+    display: none !important;
+   }
+   ion-item {
+     --border-color: transparent;
+   }
+   
+
+ ion-select.select-custom-class::part(container) {
+  margin: auto !important;
+  color: red;
+ }

@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false" style="color: red;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <ion-grid style="margin-top: 15vw;">
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <label style="font-family: PWChalk; font-size: 20vw; color: darkred;">{{contador}}</label>
+      </ion-row>
+
+      <ion-row ion-justify-content-center ion-align-items-center style="display: flex; text-align: center; margin-top: 10vw">
+        <ion-col class="ion-align-items-center"><ion-input style="--background: black; --placeholder-color: white !important; --placeholder-opacity: 1; color: white !important; font-size: 5vw; border-radius: 10px; text-align: center;" [(ngModel)]="chute" animated placeholder="Resposta Final"></ion-input></ion-col>
+        <ion-col class="ion-align-items-center" style="width: auto; height: auto; display: contents; margin: auto; text-align: center;">
+          <ion-button (click)="finalizar()" color="transparent">
+            <ion-icon name="send-outline" style="font-size: 6vw;"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="display: flex; margin-top: 15vw;">
+        <ion-card style="width: 90vw; margin: auto; opacity: 0.8; margin-top: 1vw; margin-top: 5vw; display: contents;">          
+          <ion-card-content [ngClass]='dicaBotao ? "btClickActive" : "btClick"' (click)="solicitarDica()" style="background: black; text-align: center; display: grid; margin: auto; border: 1px solid black; border-radius: 10px; max-width: 28vw; max-height: 40vw;">
+            <ion-col class="ion-align-items-center"><ion-icon name="help-buoy-outline" style="color: white; font-size: 10vw;"></ion-icon></ion-col>
+            <label style="color: white !important; font-size: 4.5vw !important;"> Solicitar Dica </label>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card style="width: 90vw; margin: auto; opacity: 0.8; margin-top: 1vw; margin-top: 5vw; display: contents;">
+          <ion-card-content [ngClass]='dicaListaBotao ? "btClickActive" : "btClick"' (click)="dicaList()" style="background: black; text-align: center; display: grid; margin: auto; border: 1px solid black; border-radius: 10px; max-width: 28vw; max-height: 40vw;">
+            <ion-col class="ion-align-items-center"><ion-icon name="list" style="color: white; font-size: 10vw;"></ion-icon></ion-col>
+            <label style="color: white !important; font-size: 4.5vw !important;"> Lista de Dicas </label>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card style="width: 90vw; margin: auto; opacity: 0.8; margin-top: 1vw; margin-top: 5vw; display: contents;">
+          <ion-card-content [ngClass]='audioMakarovBotao ? "btClickActive" : "btClick"' (click)="ouvirAudioMakarov()" style="background: black; text-align: center; display: grid; margin: auto; border: 1px solid black; border-radius: 10px; max-width: 28vw; max-height: 40vw;">
+            <ion-col class="ion-align-items-center"><ion-icon name="call" [style.color]="audioMakarov ? 'red' : 'white'" style="font-size: 10vw;"></ion-icon></ion-col>
+            <label [style.color]="audioMakarov ? 'red' : 'white'" style="font-size: 4.5vw !important;"> {{audioMakarov ? 'Parar Gravação' : 'Ouvir Gravação'}}</label>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+
+      <ion-card *ngIf="partida" style="width: 90vw; margin: auto; opacity: 0.8; margin-top: 1vw; margin-top: 5vw;">
+        <ion-card-content style="background: black; text-align: center;">
+          <div>
+            <label style="font-size: 8vw; color: white;  font-family: Cheveuxdange;">
+              {{ 
+                partida.usuarios[0].hash === partida.nomeEquipe ? partida.usuarios[0].nome + ' ' + partida.usuarios[0].sobrenome : partida.nomeEquipe 
+              }}</label>
+          </div>
+
+          <div style="margin-top: 2vw">
+            <ion-row style="margin: auto; color: white;">
+              <ion-col class="ion-align-items-center">
+                <ion-icon name="hourglass-outline" style="display: contents; font-size: 6vw;"></ion-icon>
+              </ion-col>
+
+              <ion-col class="ion-align-items-center" style="margin: auto; font-weight: bold;">
+                <ion-label>{{formatarData(partida.criadoEm)}}</ion-label>
+              </ion-col>
+
+              <ion-col class="ion-align-items-center">
+                <ion-icon name="help-buoy-outline" style="display: contents; font-size: 6vw;"></ion-icon>
+              </ion-col>
+
+              <ion-col class="ion-align-items-center"  style="margin: auto; font-size: 10vw;">
+                <ion-label>{{partida.numeroDeDicas}}</ion-label>
+              </ion-col>
+
+              <ion-col class="ion-align-items-end">
+                <ion-icon name="people-outline" style="display: contents; font-size: 6vw;"></ion-icon>
+              </ion-col> 
+
+              <ion-col class="ion-align-items-end" style="margin: auto; font-size: 10vw;">
+                <ion-label>{{partida.numeroDeJogadores}}</ion-label>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-grid>
+  </ion-content>
+</div>

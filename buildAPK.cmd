@@ -1,0 +1,1 @@
+ionic build && ionic capacitor copy && cd android && gradlew assembleDebug && cd.. && explorer.exe /e, C:\Profissional\Paranoia\paranoiaApp2023\android\app\build\outputs\apk\debug

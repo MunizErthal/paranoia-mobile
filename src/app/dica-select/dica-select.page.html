@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false" style="color: red;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <ion-grid>
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+      </ion-row>
+    </ion-grid>
+
+    <ion-row *ngIf="etapa <= 0" ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+      <div style="margin-top: 5vw">
+        <ion-card style="width: 80vw; margin: auto; opacity: 0.8;">
+          <ion-card-content style="background: black; display: grid;">
+            <label style="color: white; font-size: 5.5vw; text-decoration: underline red;">Buscando informações</label>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-row>
+
+    <div *ngIf="etapa === 1">
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <div style="margin-top: 5vw">
+          <ion-card style="width: 80vw; margin: auto; opacity: 0.8;">
+            <ion-card-content style="background: black; display: grid;">
+              <label style="color: white; font-size: 5.5vw; text-decoration: underline red;">Quais caixas foram abertas?</label>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-row>
+
+      <ion-row style="display: flex; margin-top: 1vw;">
+        <ion-card *ngFor="let dica of dicas" style="width: 90vw; margin: auto; opacity: 0.8; display: contents;">          
+          <ion-card-content [ngClass]='dica.selecionada ? "btClickActive" : "btClick"' (click)="marcarDica(dica)" style="background: black; text-align: center; display: grid; margin: auto; margin-top: 5vw; border: 1px solid black; border-radius: 10px; max-width: 28vw; max-height: 40vw;">
+            <div *ngIf="dica.selecionada" style="position: absolute; top: 0vw; right: 0vw;">
+              <img src="../../assets/images/icones/check.png" alt="" style="width: 4vw; height: auto;">
+            </div>
+            <img [src]="'../../assets/images/dicas/' + produtoCodigo + '/' + dica.dica + '.png'" alt="" style="width: 80vw; height: auto;">
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+
+      <div style="width: 80vw; margin: auto; text-align: center; display: flex; margin-bottom: 5vw; margin-top: 5vw;">
+        <ion-button style="border-bottom: solid red; margin: auto; margin-top: 5vw; text-align: center; padding-bottom: -2vw" (click)="solicitarDicas()" color="transparent">Continuar</ion-button>
+      </div>
+    </div>
+
+    <div style="min-height: 85vw;" *ngIf="etapa === 2">
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <div style="margin-top: 5vw">
+          <ion-card style="width: 80vw; margin: auto; opacity: 0.8;">
+            <ion-card-content style="background: black; display: grid;">
+              <label style="color: white; font-size: 5.5vw; text-decoration: underline red;">Escolha uma opção:</label>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-row>
+
+      <ion-row style="display: flex; margin-top: 1vw;">
+        <ion-card *ngFor="let dica of dicas" style="width: 90vw; margin: auto; display: contents;">          
+          <ion-card-content [ngClass]='dica.selecionada ? "btClickActive" : "btClick"' (click)="solicitarDicas(dica)" style="background: black; text-align: center; display: grid; margin: auto; margin-top: 5vw; border: 1px solid black; border-radius: 10px; max-width: 90vw; max-height: 40vw;">
+            <ion-card style="width: 80vw; margin: auto; background: black;">
+                <label style="color: white !important; font-size: 4.5vw !important;">{{dica.dica}}</label>
+            </ion-card>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </div>
+
+    <div style="width: 80vw; margin: auto; text-align: center; display: flex; margin-bottom: 5vw;">
+      <ion-button style="border-bottom: solid red; margin: auto; margin-top: 5vw; text-align: center; padding-bottom: -2vw" (click)="videoResposta()" color="transparent">Ver vídeo com respostas</ion-button>
+    </div>
+  </ion-content>
+</div>

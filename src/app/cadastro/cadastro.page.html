@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <ion-grid>
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+      </ion-row>
+    </ion-grid>
+
+    <ion-row style="display: flex; margin-top: 1vw;">
+      <div style="text-align: center; width: 100%; margin: auto;">
+        <label style="text-align: center; margin: auto; color: white !important; font-size: 10vw !important; font-family: Cheveuxdange;"> Cadastro </label>
+      </div>
+    </ion-row>
+
+    <ion-row style="margin-top: 2vw;">
+      <ion-item style="width: 49%; margin-right: 1vw;">
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input [(ngModel)]="userDTO.nome" type="text"></ion-input>
+      </ion-item>
+      <ion-item style="width: 49%;">
+        <ion-label position="floating">Sobrenome</ion-label>
+        <ion-input [(ngModel)]="userDTO.sobrenome" type="text"></ion-input>
+      </ion-item>
+    </ion-row>
+
+    <ion-row style="margin-top: 2vw;">
+      <ion-item style="width: 100%; margin: auto;">
+        <ion-label position="floating">Telefone</ion-label>
+        <ion-input [maskito]="phoneMask" [maskitoElement]="maskPredicate" [(ngModel)]="userDTO.telefone" type="text"></ion-input>
+      </ion-item>
+    </ion-row>
+
+    <ion-row style="margin-top: 2vw;">
+      <ion-item style="width: 100%; margin: auto;">
+        <ion-label position="floating">CPF</ion-label>
+        <ion-input [maskito]="cpfMask" [maskitoElement]="maskPredicate" [(ngModel)]="userDTO.cpf" type="text"></ion-input>
+      </ion-item>
+    </ion-row>
+
+    <ion-row style="margin-top: 2vw;">
+      <ion-item style="width: 100%; margin: auto;">
+        <ion-label [style.color]="userDTO.email.length > 0 ? (userDTO.email.indexOf('@') >= 0 && userDTO.email.indexOf('.com') >= 0 ? 'green' : 'red' ) : 'white'" position="floating">E-mail</ion-label>
+        <ion-input [(ngModel)]="userDTO.email" type="mail"></ion-input>
+      </ion-item>
+    </ion-row>
+    
+    <ion-row style="margin-top: 4vw;">
+      <ion-checkbox color="dark" [(ngModel)]="friendInvite" checked="false"></ion-checkbox>
+      <ion-label (click)="changeFriendMail()" style="margin-left: 2vw; color: white;">Um amigo me indicou</ion-label>
+    </ion-row>
+    <div *ngIf="friendInvite">
+      <ion-row>
+        <ion-card style="width: 90vw; margin: auto; opacity: 0.8; display: contents;">
+          <ion-card-content style="background: black; text-align: center; display: grid; margin: auto; margin-top: 5vw; border: 1px solid black; border-radius: 10px; max-width: 90vw; max-height: 40vw;">
+            <label style="color: white !important; font-size: 3.5vw !important;"> Diga quem te trouxe para a Paranoia e indique aos seus amigos você também, para ganhar um BitNoia por enigma respondido por eles! </label>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+
+      <ion-row style="margin-top: 2vw;">
+        <ion-item style="width: 69%; margin-right: 1vw;">
+          <ion-label [style.color]="indicadoPorBoolean ? 'green' : 'white'" position="floating">E-mail do Melhor Amigo</ion-label>
+          <ion-input [(ngModel)]="userDTO.indicadoPor" type="text"></ion-input>
+        </ion-item>
+        <ion-button [style.color]="indicadoPorBoolean ? 'green' : 'white'" (click)="verificarIndicadoPor()" style="width: 28%; border-bottom: solid red; margin-top: 5vw; text-align: center; padding-bottom: -2vw" color="transparent">Verificar</ion-button>
+      </ion-row>
+    </div>
+
+    <ion-row style="margin-top: 4vw;">
+      <ion-item style="width: 49%; margin-right: 1vw;">
+        <ion-label position="floating">Senha</ion-label>
+        <ion-input [(ngModel)]="userDTO.senha" type="password"></ion-input>
+      </ion-item>
+      <ion-item style="width: 49%;">
+        <ion-label position="floating">Confirme a Senha</ion-label>
+        <ion-input [(ngModel)]="passwordConfirm" type="password"></ion-input>
+      </ion-item>
+    </ion-row>
+
+    <ion-row *ngIf="userDTO.senha !== passwordConfirm" style="margin-top: 4vw;">
+      <ion-label style="margin-left: 2vw; color: red">As senhas não conferem</ion-label>
+    </ion-row>
+    
+    <ion-row style="margin-top: 3vw;">
+      <ion-checkbox color="dark" [(ngModel)]="contratoAcept" checked="false"></ion-checkbox>
+      <ion-label (click)="changeConfirm()" style="margin-left: 2vw; color: white;">Aceito os termos do <label style="text-decoration: underline red; color: white;" (click)="contrato()">contrato</label></ion-label>
+    </ion-row>
+
+    <ion-button (click)="cadastrar()" [disabled]="userDTO === undefined || (userDTO.sobrenome === undefined || userDTO.sobrenome.length <= 0) || (userDTO.nome === undefined || userDTO.nome.length <= 0) || (userDTO.telefone === undefined || userDTO.telefone.length <= 0) || (userDTO.cpf === undefined || userDTO.cpf.length <= 0) || (userDTO.email === undefined || userDTO.email.length <= 0 || userDTO.email.indexOf('@') < 0 || userDTO.email.indexOf('.com') < 0) || (userDTO.senha === undefined || userDTO.senha === '' || userDTO.senha.length <= 0 || userDTO.senha !== passwordConfirm) || !contratoAcept" style="margin-bottom: 10vw !important; width: 100%; margin: auto; border-bottom: solid red; margin-top: 5vw; text-align: center; padding-bottom: -2vw" color="transparent">{{cadastrarText}}</ion-button>
+  </ion-content>
+</div>

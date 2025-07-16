@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false" style="color: red;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <ion-grid>
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+      </ion-row>
+    </ion-grid>
+
+    <ion-row style="display: flex; margin-top: 5vw;" ion-justify-content-center ion-align-items-center>
+      <ion-card style="width: 90vw; margin: auto; opacity: 0.8;">
+        <ion-card-content style="background: black; display: flex; flex-direction: column;">
+          <div (click)="changeCadeadosView()" style="display: flex;">
+            <ion-button style="position: fixed; top: 1vw;" fill="clear" expand="block">
+              <ion-icon *ngIf="!listaCadeados"  style="color: red; font-size: 5vw;" name="chevron-down"></ion-icon>
+              <ion-icon *ngIf="listaCadeados"  style="color: red; font-size: 5vw;" name="chevron-up"></ion-icon>
+            </ion-button>
+            <label style="border-bottom: red; color: white; font-size: 5vw; margin: auto;"> Cadeados </label>
+          </div>
+        </ion-card-content>
+        <div *ngIf="listaCadeados" scrollY="true" id="myFixZone" class="fixed" style="margin-top: -2vw; border-bottom: solid 1px rgba(128, 128, 128, 0.25); background: linear-gradient(0deg, rgba(0,0,0,1) -10%, rgba(116,114,114,0) 30%, rgba(116,114,114,0) 50%);">
+          <ion-list inset="true" style="background: transparent;">
+            <ion-row *ngFor="let video of cadeados" style="display: flex; margin-top: 1vw;">
+              <ion-card style="width: 90vw; margin: auto; opacity: 0.8; display: contents;">
+                <ion-card-content (click)="playVideo(video)" style="width: 85vw; background: black; text-align: center; display: grid; margin: auto; margin-top: 3vw; border: 1px solid black; border-radius: 10px; max-width: 90vw; max-height: 40vw;">
+                  <label style="color: white !important; font-size: 4.5vw !important;"> {{video}} </label>
+                </ion-card-content>
+              </ion-card>
+        
+              <video muted class="videoBoxHelp" controls *ngIf="videoSelect === video" [poster]="'https://paranoiars.com.br:447/profileImages/tutoriais/' + video + '.jpg'">
+                <source [src]="'https://paranoiars.com.br:447/profileImages/tutoriais/' + video + '.mp4'" type="video/mp4">
+              </video>
+            </ion-row>
+          </ion-list>
+        </div>
+      </ion-card>
+    </ion-row>
+
+    <ion-row *ngFor="let video of videos" style="display: flex; margin-top: 5vw;">
+      <ion-card style="width: 90vw; margin: auto; opacity: 0.8;">
+        <ion-card-content (click)="playVideo(video)" style="background: black; text-align: center; display: flex; flex-direction: column;">
+          <label style="color: white !important; font-size: 4.5vw !important;"> {{video}} </label>
+        </ion-card-content>
+      </ion-card>
+
+      <video muted class="videoBoxHelp" controls *ngIf="videoSelect === video" [poster]="'https://paranoiars.com.br:447/profileImages/tutoriais/' + video + '.jpg'">
+        <source [src]="'https://paranoiars.com.br:447/profileImages/tutoriais/' + video + '.mp4'" type="video/mp4">
+      </video>
+    </ion-row>
+  </ion-content>
+</div>

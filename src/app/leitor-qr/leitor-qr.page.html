@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="cancelar()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <div style="height: 100%; text-align: center;">
+      <ion-grid>
+        <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+          <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+        </ion-row>
+      </ion-grid>
+
+      <ion-card style="width: 80vw; margin: auto; opacity: 0.8; margin-top: 5vw;">
+        <ion-card-content style="background: black;">
+          <div style="display: grid;">
+            <label style="color: white; font-size: 10vw; margin-bottom: 2vw;">Atenção</label>
+            <label style="color: white; margin-bottom: 2vw; font-size: 3.5vw">Após escanear o QR-Code o seu tempo vai começar a contar, por isso, tenha certeza de estar preparado para o continuar o jogo</label>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="commandType !== 1" style="width: 80vw; margin: auto; opacity: 0.8; margin-top: 5vw; background: black;">
+        <ion-list>
+          <ion-item>
+            <ion-select class="select-custom-class" [(ngModel)]="nomeEquipeSelecionada" style="--placeholder-opacity: 0.8" aria-label="Equipes" interface="action-sheet" placeholder="Selecione a Equipe">
+              <ion-select-option *ngFor="let equipe of equipes" value="{{ equipe.nome }}">{{equipe.nome}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+
+      <div style="width: 80vw; margin: auto; text-align: center; display: flex; margin-bottom: 5vw;">
+        <ion-button [style.opacity]="this.commandType !== 1 && nomeEquipeSelecionada === '' ? '0.5' : '1'"  style="border-bottom: solid red; margin: auto; margin-top: 5vw; text-align: center; padding-bottom: -2vw" (click)="lerQRCode()" color="transparent">Ler QR-Code</ion-button>
+        <ion-button style="border-bottom: solid red; margin: auto; margin-top: 5vw; text-align: center; padding-bottom: -2vw" (click)="cancelar()" color="transparent">Cancelar</ion-button>
+      </div>
+    </div>
+  </ion-content>
+</div>

@@ -1,0 +1,180 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button id="convitesModalTrigger" expand="block">
+        <ion-icon name="{{convites.length > 0 ? 'mail-unread-outline' : 'mail-outline'}}" style="color: red;"></ion-icon>
+      </ion-button>
+      <ion-button id="criarEquipeModalTrigger" expand="block">
+        <ion-icon name="add-outline" style="color: red;"></ion-icon>
+      </ion-button>
+      <ion-menu-button autoHide="false" style="color: red;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <ion-grid class="fullheight center">
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+      </ion-row>
+
+      <ion-row *ngFor="let equipe of equipes" style="display: flex;" ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin: auto; margin-top: 10vw">
+        <ion-card style="width: 80vw; margin: auto; opacity: 0.8;">
+          <ion-card-content style="background: black; display: flex; flex-direction: column;">
+            <div (click)="changeEquipeView(equipe)" style="display: flex;">
+              <ion-button style="position: fixed; top: 1vw;" fill="clear" expand="block">
+                <ion-icon *ngIf="!equipe.expandida"  style="color: red; font-size: 5vw;" name="chevron-down"></ion-icon>
+                <ion-icon *ngIf="equipe.expandida"  style="color: red; font-size: 5vw;" name="chevron-up"></ion-icon>
+              </ion-button>
+              <label style="border-bottom: red; color: white; font-size: 5vw; margin: auto;"> {{ equipe.nome }} </label>
+            </div>
+            <div *ngIf="equipe.expandida" style="display: flex; margin: auto; margin-bottom: -5vw;">
+              <ion-button fill="clear" *ngIf="equipe.lider" (click)="editarEquipeModal.present()" expand="block">
+                <ion-icon name="pencil-outline" style="color: red;"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" *ngIf="equipe.lider" (click)="convidarMembroModal.present()" expand="block">
+                <ion-icon name="person-add-outline" style="color: red;"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" (click)="sairDaEquipe()">
+                <ion-icon name="exit-outline" style="color: red;"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" *ngIf="equipe.lider" (click)="excluirEquipe()">
+                <ion-icon name="trash-outline" style="color: red;"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-card-content>
+          <div *ngIf="equipe.expandida" scrollY="true" id="myFixZone" class="fixed" style="margin-top: -2vw; border-bottom: solid 1px rgba(128, 128, 128, 0.25); background: linear-gradient(0deg, rgba(0,0,0,1) -10%, rgba(116,114,114,0) 30%, rgba(116,114,114,0) 50%);">
+            <ion-list inset="true" style="background: transparent;">
+              <ion-item *ngFor="let usuario of equipe.usuarios" style="--background: transparent; border-bottom: solid red 1px; margin-bottom: 3vw;">
+                <ion-col>
+                  <label style="display: contents;">
+                    <img class="teamProfileCircle" src="{{'https://paranoiars.com.br:447/profileImages/' + (usuario.foto === '' || usuario.foto.length <= 0 ? 'profileDefault' : usuario.foto) + '.jpg'}}"/>
+                  </label>
+                </ion-col>
+                <ion-col>
+                  <label style="margin-left: 2vw;"> {{usuario.nome}} </label>
+                </ion-col>
+                <ion-col *ngIf="usuario.lider">
+                  <ion-icon name="shield-checkmark-outline" style="margin-left: 10vw; font-size: 10vw;"></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="!usuario.lider && equipe.lider">
+                  <ion-icon name="close-outline" (click)="removerMembro(usuario)" style="margin-left: 10vw; font-size: 10vw;"></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="!usuario.lider && !equipe.lider">
+                </ion-col>
+              </ion-item>
+            </ion-list>
+          </div>
+        </ion-card>
+      </ion-row>
+
+      <!-- SEM EQUIPE -->
+      <ion-row *ngIf="equipes.length <= 0" ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <ion-card style="width: 80vw; margin: auto; opacity: 0.8;">
+          <ion-card-content style="background: black;">
+            <label style="color: white; font-size: 5vw;"> Você ainda não faz parte de nenhuma equipe.</label>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-grid>
+
+
+    <!-- MODAL CRIAR EQUIPE -->
+    <ion-modal #editarEquipeModal [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+      <ng-template>
+        <ion-card style="width: 100%; margin: auto; opacity: 0.8;">
+          <ion-card-content style="background: black;">
+            <ion-list style="background: black; display: flex; flex-direction: column;" >
+              <ion-item>
+                <ion-label style="width: 100%;" position="floating">Nome da Equipe</ion-label>
+                <ion-input [(ngModel)]="equipeSelecionada.nome" type="text" pattern="Nome da Equipe"></ion-input>
+              </ion-item>
+              <div style="display: flex;">
+                <ion-button *ngIf="equipeSelecionada" style="border-bottom: solid red; margin: auto; margin-right: 1vw;" (click)="editarEquipe(editarEquipeModal)" color="transparent">Salvar</ion-button>
+              </div>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ng-template>
+    </ion-modal>
+
+    <!-- MODAL CONVIDAR MEMBRO -->
+    <ion-modal #convidarMembroModal [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+      <ng-template>
+        <ion-card style="width: 100%; margin: auto; opacity: 0.8;">
+          <ion-card-content style="background: black;">
+            <ion-list style="background: black; display: flex; flex-direction: column;" >
+              <ion-item>
+                <ion-label position="floating">E-mail</ion-label>
+                <ion-input [(ngModel)]="emailConvite" type="text" pattern="E-mail"></ion-input>
+              </ion-item>
+              <div style="display: flex;">
+                <ion-button *ngIf="equipeSelecionada" style="border-bottom: solid red; margin: auto; margin-right: 1vw;" (click)="convidarMembro(convidarMembroModal)" color="transparent">Convidar</ion-button>
+              </div>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ng-template>
+    </ion-modal>
+    
+    <!-- MODAL CRIAR EQUIPE -->
+    <ion-modal #criarEquipeModal id="criarEquipeModal" trigger="criarEquipeModalTrigger" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+      <ng-template>
+        <ion-card style="width: 100%; margin: auto; opacity: 0.8;">
+          <ion-card-content style="background: black;">
+            <ion-list style="background: black; display: flex; flex-direction: column;" >
+              <ion-item>
+                <ion-label style="width: 100%;" position="floating">Nome da Equipe</ion-label>
+                <ion-input [(ngModel)]="nome" type="text" pattern="Nome da Equipe"></ion-input>
+              </ion-item>
+              <div style="display: flex;">
+                <ion-button style="border-bottom: solid red; margin: auto; margin-right: 1vw;" (click)="criarEquipe(criarEquipeModal)" color="transparent">Criar</ion-button>
+              </div>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ng-template>
+    </ion-modal>
+
+    <!-- MODAL CONVITES -->
+    <ion-modal trigger="convitesModalTrigger" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+      <ng-template>
+        <div *ngIf="convites.length <= 0" style="margin: 5vw; display: flex;">
+          <ion-card style="margin: auto; opacity: 0.8;">
+            <ion-card-content style="background: black;">
+              <label style="color: white; font-size: 5vw;"> Nenhum convite até o momento.</label>
+            </ion-card-content>
+          </ion-card>
+        </div>
+
+        <div *ngFor="let convite of convites" style="margin-top: 5vw; display: flex;">
+          <ion-card style="width: 100%; margin: auto; opacity: 0.8;">
+            <ion-card-content style="background: black; display: grid;">
+              <div style="background: rgba(176, 176, 176, 0.2); border-radius: 1vw; padding: 2vw; display: flex; flex-direction: column;">
+                <div style="margin: auto; text-align: center; margin-top: 4vw; margin-bottom: -4vw;">
+                  <label style="color: white; font-size: 5vw; margin: auto;"> {{ 'O usuário ' + convite.enviadoPor + ' convidou você para se juntar a equipe ' + convite.nomeEquipe }}</label>
+                </div>
+                <div style="display: flex; margin: auto;">
+                  <ion-button style="margin-top: 5vw; text-align: center; padding-bottom: -2vw" (click)="responderConvite(true, convite.id)" color="transparent">
+                    <ion-icon name="checkmark-outline" style="color: red;"></ion-icon>
+                  </ion-button>
+    
+                  <ion-button style="margin-top: 5vw; text-align: center; padding-bottom: -2vw" (click)="responderConvite(false, convite.id)" color="transparent">
+                    <ion-icon name="close-outline" style="color: red;"></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ng-template>
+    </ion-modal>
+  </ion-content>
+</div>

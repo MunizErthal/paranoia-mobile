@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false" style="color: red;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+
+    <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+      <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+    </ion-row>
+    <div style="display: grid; margin-top: 5vw;">
+      <ion-card *ngIf="ranking.length <= 0" style="width: 80vw; margin: auto; margin-top: 1vw;">
+        <ion-card-content style="background: black;">
+          <div>
+            <label style="font-size: 5vw; color: white;">Sem partidas até o momento</label>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngFor="let partida of ranking; let ind = index"  style="width: 80vw; margin: auto; margin-top: 1vw;">
+        <ion-card-content style="background: black; display: flex; flex-direction: column; margin: auto;">
+          <div style="display: flex; border-bottom: solid red 1px; margin: auto; flex-direction: column;">
+              <ion-row style="font-size: 8vw; display: flex; margin: auto; margin-bottom: 2vw; margin-top: -6vw;">
+                <ion-label style="font-family: Bellerose; text-wrap: nowrap;color: white;"> {{ partida.produto }} </ion-label>
+              </ion-row>
+              <ion-row ion-justify-content-center ion-align-items-center style="display: flex; text-align: center; margin-top: 2vw;">
+                <div style="text-align: center; margin: auto; overflow: auto; max-width: 150vw; display: flex;">
+                  <div *ngFor="let usuario of partida.usuarios;" style="margin: auto;">
+                    <img class="teamProfileCircle" style="max-width: unset;" src="{{'https://paranoiars.com.br:447/profileImages/' + (usuario.perfil.foto === '' || usuario.perfil.foto.length <= 0 ? 'profileDefault' : usuario.perfil.foto) + '.jpg'}}"/>
+                  </div>
+                </div>
+              </ion-row>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; margin: auto;">
+              <ion-row style="margin: auto; display: flex;">
+                <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex" class="ion-align-items-center">
+                  <ion-icon name="shield-outline" style="margin: auto; color: red; font-size: 8vw;"></ion-icon>
+                </ion-col>
+                <ion-col style="margin: auto; display: flex;" class="ion-align-items-center">
+                  <label style="margin: auto; margin-left: 0vw; text-wrap: nowrap; max-width: 25vw; overflow: hidden;">{{partida.nomeEquipe}}</label>
+                </ion-col>
+                
+                <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex" class="ion-align-items-center">
+                  <ion-icon name="hourglass-outline" style="margin: auto; color: red; font-size: 8vw;"></ion-icon>
+                </ion-col>
+                <ion-col style="margin: auto; display: flex;" class="ion-align-items-center">
+                  <label style="margin: auto; margin-left: 0vw;">{{partida.tempoDeJogo}}</label>
+                </ion-col>
+              </ion-row>
+              <ion-row style="margin: auto; display: flex;">
+                <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex" class="ion-align-items-start">
+                  <ion-icon name="medal-outline" style="margin: auto; color: red; font-size: 8vw;"></ion-icon>
+                </ion-col>
+                <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex;" class="ion-align-items-start">
+                  <label style="margin: auto; margin-left: 0vw;">{{(partida.posicaoRanking) + 'º'}}</label>
+                </ion-col>
+
+                <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex" class="ion-align-items-center">
+                  <ion-icon name="help-buoy-outline" style="margin: auto; color: red; font-size: 8vw;"></ion-icon>
+                </ion-col>
+                <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex;" class="ion-align-items-center">
+                  <label style="margin: auto; margin-left: 0vw;">{{partida.numeroDeDicas}}</label>
+                </ion-col>
+
+                <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex" class="ion-align-items-center">
+                  <ion-icon name="people-outline" style="margin: auto; color: red; font-size: 8vw;"></ion-icon>
+                </ion-col>
+                <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex;" class="ion-align-items-center">
+                  <label style="margin: auto; margin-left: 0vw;">{{partida.numeroDeJogadores}}</label>
+                </ion-col>
+              </ion-row>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>
+</div>

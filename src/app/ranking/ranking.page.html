@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false" style="color: red;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+
+    <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+      <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+    </ion-row>
+
+    <ion-card *ngIf="!rankingProduto || rankingProduto.length <= 0 || !rankingProduto[0]" style="margin: auto; display: flex; background: transparent; top: 10vw;">
+      <ion-card-content style="background: black; margin: auto;">
+        <div>
+          <label style="font-size: 5vw; color: white;">Sem colocações até o momento</label>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-slides *ngIf="rankingProduto && rankingProduto.length > 0 && rankingProduto[0]" pager="true" style="--bullet-background-active: red; position: initial" [options]="slideOpts">
+      <ion-slide *ngFor="let produto of rankingProduto; let ind = index" style="margin-top: 5vw; margin-bottom: 2vw;">
+        <div style="display: grid; margin-top: 5vw;">
+          <div style="display: flex; margin-bottom: 2vw;">
+            <ion-icon name="arrow-back-circle-outline" [style.color]="ind === 0 ? 'aliceblue' : 'red'" [style.opacity]="ind === 0 ? '0.5' : '1'" style="font-size: 6vw; margin: auto;"></ion-icon>
+
+            <ion-card style="width: 70vw; margin-top: 2vw; margin: auto;  margin-left: 2vw; margin-right: 2vw;">
+              <ion-card-content style="background: black;">
+                <div style="display: flex;">
+                  <label style="font-size: 6vw; color: white; font-family: Bellerose; margin: auto; margin-top: -6vw; color: white;">{{produto.produto}}</label>
+                </div>
+              </ion-card-content>
+            </ion-card>
+
+            <ion-icon name="arrow-forward-circle-outline" [style.color]="ind === rankingProduto.length - 1 ? 'aliceblue' : 'red'" [style.opacity]="ind === 0 ? '0.5' : '1'" style="font-size: 6vw; margin: auto;"></ion-icon>
+          </div>
+
+          <ion-card *ngIf="produto.partidas.length <= 0" style="width: 80vw; margin: auto; margin-top: 1vw;">
+            <ion-card-content style="background: black;">
+              <div>
+                <label style="font-size: 5vw; color: white;">Sem partidas até o momento</label>
+              </div>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card *ngFor="let partida of produto.partidas; let i = index" style="width: 80vw; margin: auto; margin-top: 1vw;">
+            <ion-card-content style="background: black; display: flex; flex-direction: column; margin: auto;">
+              <div style="text-align: center; display: flex; border-bottom: solid red 1px; margin: auto; width: 70vw; flex-direction: column;">
+                  <ion-row style="font-size: 8vw; display: flex; margin: auto; margin-bottom: 2vw; margin-top: -6vw;">
+                    <ion-label style="font-family: Bellerose; text-wrap: nowrap; color: white;"> {{ partida.nomeEquipe }} </ion-label>
+                  </ion-row>
+                  <ion-row ion-justify-content-center ion-align-items-center style="display: flex; text-align: center; margin-top: 2vw;">
+                    <div style="text-align: center; margin: auto; overflow: auto; max-width: 150vw; display: flex;">
+                      <div *ngFor="let usuario of partida.usuarios;" style="margin: auto;">
+                        <img class="teamProfileCircle" style="max-width: unset;" src="{{'https://paranoiars.com.br:447/profileImages/' + (usuario.perfil.foto === '' || usuario.perfil.foto.length <= 0 ? 'profileDefault' : usuario.perfil.foto) + '.jpg'}}"/>
+                      </div>
+                    </div>
+                  </ion-row>
+              </div>
+              
+              <div style="display: flex; flex-direction: column; margin: auto; width: 70vw;">
+                <ion-row style="margin: auto; display: flex; width: 30vw;">
+                  <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex" class="ion-align-items-center">
+                    <ion-icon name="hourglass-outline" style="margin: auto; color: red; font-size: 8vw;"></ion-icon>
+                  </ion-col>
+                  <ion-col style="margin: auto; display: flex;" class="ion-align-items-center">
+                    <label style="margin: auto; margin-left: 0vw;">{{partida.tempoDeJogo}}</label>
+                  </ion-col>
+                </ion-row>
+                <ion-row style="margin: auto; display: flex; width: 60vw;">
+                  <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex" class="ion-align-items-start">
+                    <ion-icon name="medal-outline" style="margin: auto; color: red; font-size: 8vw;"></ion-icon>
+                  </ion-col>
+                  <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex;" class="ion-align-items-start">
+                    <label style="margin: auto; margin-left: 0vw;">{{(i + 1) + 'º'}}</label>
+                  </ion-col>
+
+                  <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex" class="ion-align-items-center">
+                    <ion-icon name="help-buoy-outline" style="margin: auto; color: red; font-size: 8vw;"></ion-icon>
+                  </ion-col>
+                  <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex;" class="ion-align-items-center">
+                    <label style="margin: auto; margin-left: 0vw;">{{partida.numeroDeDicas}}</label>
+                  </ion-col>
+
+                  <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex" class="ion-align-items-center">
+                    <ion-icon name="people-outline" style="margin: auto; color: red; font-size: 8vw;"></ion-icon>
+                  </ion-col>
+                  <ion-col style="margin: auto; width: 12vw; height: 12vw; display: flex;" class="ion-align-items-center">
+                    <label style="margin: auto; margin-left: 0vw;">{{partida.numeroDeJogadores}}</label>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </ion-content>
+</div>

@@ -1,0 +1,33 @@
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <div style="margin: auto; text-align: center; margin-top: 5vw;">
+      <div>
+        <label style="color: white;">Chamada via </label> <label style="color: red;"> {{userName}} </label> <label style="color: white;">de</label>
+      </div>
+      <div>
+        <h1 style="color: white;">Desconhecido</h1>
+      </div>
+    </div>
+
+    <div style="margin: auto; text-align: center; display: flex; align-items: center; justify-content: center; height: 65%;">
+      <div style="text-align: center;">
+        <img *ngIf="!atendeu" src="../../assets/images/makarov-call/waveGif.gif" alt="" style="width: 55vw; height: auto;">
+        <img *ngIf="atendeu" src="../../assets/images/makarov-call/avatarMak.png" alt="" style="width: 55vw; height: auto;">
+      </div>
+    </div>
+
+    <div *ngIf="atendeu" style="margin-top: 2vw; margin: auto; text-align: center; display: flex; align-items: center; justify-content: center;">
+      <label style="text-align: center; margin: auto; color: white;">{{timestring}}</label>
+    </div>
+  </ion-content>
+
+  <ion-footer style="text-align: center; background: #121212">
+    <div style="margin-bottom: 5vw;">
+      <label *ngIf="!atendeu" style="color: white; font-size: 4vw">Aperte para atender</label>
+    </div>
+    <div class="teamProfileCircle" style="background: white; text-align: center; margin: auto; display: flex; margin-bottom: 10vw;">
+      <ion-icon name="call" *ngIf="!atendeu" (click)="atende()" style="color: green; font-size: 7vw; margin: auto;"></ion-icon>
+      <ion-icon name="call" *ngIf="atendeu" style="color: red; font-size: 7vw; margin: auto;"></ion-icon>
+    </div>
+  </ion-footer>
+</div>

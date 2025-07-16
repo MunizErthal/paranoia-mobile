@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false" style="color: red;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <ion-grid>
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+      </ion-row>
+    </ion-grid>
+
+    <ion-card style="width: 80vw; margin: auto; opacity: 0.8; margin-top: 5vw;">
+      <ion-card-content style="background: black; text-align: center;">
+        <div style="display: grid;">
+          <label style="color: white; font-size: 10vw; margin-bottom: 2vw;">Atenção</label>
+          <label style="color: white; margin-bottom: 2vw; font-size: 3.5vw">Os vídeos podem estar desatualizados de maneira superficial com o conteúdo atual da caixa, mas todas as lógicas e respostas seguem sendo as mesmas.</label>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-row *ngFor="let video of videos" style="display: flex; margin-top: 1vw;">
+      <ion-card style="width: 90vw; margin: auto; opacity: 0.8; display: contents;">
+        <ion-card-content (click)="playVideo(video)" style="background: black; text-align: center; display: grid; margin: auto; margin-top: 5vw; border: 1px solid black; border-radius: 10px; max-width: 90vw; max-height: 40vw;">
+          <label style="color: white !important; font-size: 4.5vw !important;"> {{video}} </label>
+        </ion-card-content>
+      </ion-card>
+
+      <video class="videoBoxHelp" controls *ngIf="videoSelect === video" [poster]="'https://paranoiars.com.br:447/profileImages/produtos/aentregademakarov/videos/' + video + '.jpg'">
+        <source [src]="'https://paranoiars.com.br:447/profileImages/produtos/aentregademakarov/videos/' + video + '.mp4'" type="video/mp4">
+      </video>
+    </ion-row>
+  </ion-content>
+</div>

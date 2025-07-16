@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent;">
+    <ion-buttons slot="start">
+      <ion-button (click)="backButton()">
+        <ion-icon name="chevron-back-outline" style="color: red;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-menu-button autoHide="false" style="color: red;"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <ion-grid>
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 10vw">
+        <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+      </ion-row>
+
+      <ion-row ion-justify-content-center ion-align-items-center style="display: flex; text-align: center; margin-top: 10vw">
+        <ion-col *ngFor="let medalha of medalhas" size="4" col-4>
+          <img (click)="openMedalModal(medalha.descricao, medalha.nome, medalha.codigo, medalha.temMedalha, medalha.mostrarDescricao)" style="width: 20vw; height: auto;" [src]="'../../assets/images/medalhas/' + medalha.codigo + (medalha.temMedalha ? '' : '_pb') + '.png'"/>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</div>

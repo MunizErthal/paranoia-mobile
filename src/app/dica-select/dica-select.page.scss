@@ -1,0 +1,12 @@
+// Animação do Botão
+.btClick {
+    box-shadow: 0 2px #fff;
+}
+
+.btClick:hover {background-color: #141414}
+
+.btClickActive {
+  background-color: #141414;
+  box-shadow: 0 1px rgb(54, 54, 54);
+  transform: translateY(4px);
+}

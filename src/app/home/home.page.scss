@@ -25,3 +25,21 @@
 #container a {
   text-decoration: none;
 }
+
+/*#mainContent {
+  --background: url('../../assets/images/background.png') no-repeat center center / cover fixed !important;
+  position: fixed;
+  height: 100% auto !important;
+  padding-bottom: 0 !important;
+}*/
+
+.profileMobileCircleProgress {
+  height: 30vw;
+  width: 30vw;
+  margin: 1.10vw;
+  border-radius: 50%;
+}
+
+ion-item {
+  --background: black;
+}

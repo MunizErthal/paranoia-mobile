@@ -1,0 +1,32 @@
+<div class="ion-page" id="main-content">
+  <ion-content id="mainContent" class="ion-padding">
+    <ion-grid>
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; text-align: center; margin-top: 30vw">
+        <img src="../../assets/images/paranoia.png" alt="" style="width: 80vw; height: auto;">
+      </ion-row>
+
+      <ion-row ion-justify-content-center ion-align-items-center style="display: block; margin-top: 25vw; text-align: center;">
+        <ion-card style="width: 80vw; margin: auto; opacity: 0.8;">
+          <ion-card-content style="background: black;">
+            <ion-list style="background: black;" >
+
+                <ion-item style="margin-left: -2vw">
+                  <ion-label position="floating">E-mail</ion-label>
+                  <ion-input [(ngModel)]="email" type="email"  pattern="email"></ion-input>
+                </ion-item>
+
+                <ion-item style="margin-left: -2vw">
+                  <ion-label position="floating">Senha</ion-label>
+                  <ion-input [(ngModel)]="password" type="password"></ion-input>
+                </ion-item>
+
+              <ion-button [disabled]="email === '' || password === '' || email.length <= 0 || password.length <= 0" style="border-bottom: solid red; margin-right: 2vw; margin-top: 5vw; text-align: center; padding-bottom: -2vw" (click)="login()" color="transparent">Entrar</ion-button>
+              <ion-button style="border-bottom: solid red; margin-top: 5vw; text-align: center; padding-bottom: -2vw; margin-left: 2vw;" (click)="cadastrar()" color="transparent">Cadastrar</ion-button>
+
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</div>

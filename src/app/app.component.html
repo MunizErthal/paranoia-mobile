@@ -1,3 +1,100 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
+<ion-app #ioncAppId id="ioncAppId">
+  <ion-menu *ngIf="perfil" style="--background: rgb(0, 0, 0, 0.3); --width: 81%" side="end" content-id="mainContent">
+    <ion-header style="height: 35vw; background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8771708512506565) 22%, rgba(0,0,0,0.6978991425671831) 100%);">
+      <div>
+        <div style="display: table-caption; width: 100%; border-bottom: solid rgba(128, 128, 128, 0.25) 1px; position: absolute;">
+          <ion-toolbar style="height: 27vw; --background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8771708512506565) 22%, rgba(0,0,0,0.6978991425671831) 100%);" translucent>
+          </ion-toolbar>
+        </div>
+        <div style="display: grid; margin: 1vw; width: 100%; height: 100%; position: relative;">
+          <div style="display: flex;">
+            <label style="display: contents;">
+              <img style="z-index: 10;" class="profileMobileCircleProgress" [src]="'https://paranoiars.com.br:447/profileImages/' + (perfil && perfil.foto ? perfil.foto : 'profileDefault') + '.jpg'"/>
+            </label>
+
+            <div style="z-index: 10; height: max-content; text-align: center;">
+              <div style="margin: 2vw; text-align: center">
+                <div style="height: max-content;">
+                  <label style="color: #fff; font-size: 5vw; text-decoration: underline red">{{usuario.nome}}</label>
+                </div>
+              </div>
+
+              <div style="display: flex; z-index: 10; margin: 3vw; height: max-content; margin-top: 0vw;">
+                <div style="height: max-content; margin-top: auto; margin-bottom: auto; min-width: 10vw;">
+                  <img style="width: 7vw; height: auto;" src="../../assets/images/menu-small/lvlicon.png"/>
+                </div>
+                <div style="height: max-content; margin-top: auto; margin-bottom: auto; min-width: 10vw;">
+                  <label style="color: #fff;">{{perfil.nivel.nivel}}</label>
+                </div>
+                <div style="height: max-content; margin-top: auto; margin-bottom: auto; min-width: 10vw;">
+                  <img style="width: 7vw; height: auto;" src="../../assets/images/menu-small/rankingB.png"/>
+                </div>
+                <div style="height: max-content; margin-top: auto; margin-bottom: auto; min-width: 10vw;">
+                  <label style="color: #fff;">{{perfil.posicaoRanking}}</label>
+                </div>
+              </div>
+
+              <div style="display: flex; z-index: 10; margin: 3vw; height: max-content; margin-top: -2vw;">
+                <div style="height: max-content; margin-top: auto; margin-bottom: auto; min-width: 10vw;">
+                  <img style="width: 7vw; height: auto;" src="../../assets/images/menu-small/bitnoia.png"/>
+                </div>
+                <div style="height: max-content; margin-top: auto; margin-bottom: auto; min-width: 10vw;">
+                  <label style="color: #fff;">{{perfil.bitnoias}}</label>
+                </div>
+                <div style="height: max-content; margin-top: auto; margin-bottom: auto; min-width: 10vw;">
+                  <img style="width: 7vw; height: auto;" src="../../assets/images/menu-small/xp.png"/>
+                </div>
+                <div style="height: max-content; margin-top: auto; margin-bottom: auto; min-width: 10vw;">
+                  <label style="color: #fff;">{{perfil.experiencia}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ion-header>
+
+    <ion-content padding [style.background-size]="'100% ' + shouldHeight" style="--background: black; opacity: 0.7;" id="menuContent">
+      <ion-list style="padding-bottom: 0; padding-top: 0">
+        <ion-item>
+          <ion-icon style="font-size: 7.2vw; color: white" name="home-outline" slot="start"></ion-icon>
+          <ion-label style="font-size: 4.5vw;" (click)="goHome()">Início</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon style="font-size: 7.2vw; color: white" name="shield-outline" slot="start"></ion-icon>
+          <ion-label style="font-size: 4.5vw;" (click)="openMenu('equipe')">Equipe</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon style="font-size: 7.2vw; color: white" name="podium-outline" slot="start"></ion-icon>
+          <ion-label style="font-size: 4.5vw;" (click)="openMenu('user-ranking')">Ranking de Usuários</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon style="font-size: 7.2vw; color: white" name="trophy-outline" slot="start"></ion-icon>
+          <ion-label style="font-size: 4.5vw;" (click)="openMenu('ranking')">Ranking de Equipes</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon style="font-size: 7.2vw; color: white" name="medal-outline" slot="start"></ion-icon>
+          <ion-label style="font-size: 4.5vw;" (click)="openMenu('medalhas')">Medalhas</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon style="font-size: 7.2vw; color: white" name="hourglass-outline" slot="start"></ion-icon>
+          <ion-label style="font-size: 4.5vw;" (click)="openMenu('meus-tempos')">Meus Tempos</ion-label>
+        </ion-item>
+        <ion-item *ngIf="usuario.email === 'fernando.m.erthal@gmail.com' || 'rafaelamaurer@gmail.com'">
+          <ion-icon style="font-size: 7.2vw; color: red" name="medal-outline" slot="start"></ion-icon>
+          <ion-label style="font-size: 4.5vw;" (click)="openAdminMedalSet()">Conceder medalha</ion-label>
+        </ion-item>
+        <ion-item *ngIf="usuario.email === 'fernando.m.erthal@gmail.com' || 'rafaelamaurer@gmail.com'">
+          <ion-icon style="font-size: 7.2vw; color: red" name="qr-code-outline" slot="start"></ion-icon>
+          <ion-label style="font-size: 4.5vw;" (click)="finalizarPartidaAdmin()">Finalizar Partida</ion-label>
+        </ion-item>
+        <ion-item (click)="logout()">
+          <ion-icon style="font-size: 7.2vw; color: white" name="exit" slot="start"></ion-icon>
+          <ion-label style="font-size: 4.5vw;">Logout</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="mainContent" main></ion-router-outlet>
 </ion-app>
